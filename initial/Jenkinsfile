@@ -5,25 +5,25 @@ pipeline{
 
     stages{
         stage('Checkout'){
-            step{
+            steps{
                 echo ""
             }
         }
 
         stage('Build'){
-            step{
+            steps{
                 echo ""
             }
         }
 
         stage('Publish'){
-            step{
+            steps{
                 echo ""
             }
         }
 
         stage('Deploy'){
-            step{
+            steps{
                 echo ""
             }
         }
