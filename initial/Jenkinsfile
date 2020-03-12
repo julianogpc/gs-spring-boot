@@ -1,0 +1,37 @@
+pipeline{
+    agent{
+        label 'master'
+    }
+
+    stages{
+        stage('Checkout'){
+            step{
+                echo ""
+            }
+        }
+    }
+
+    stages{
+        stage('Build'){
+            step{
+                echo ""
+            }
+        }
+    }
+
+    stages{
+        stage('Publish'){
+            step{
+                echo ""
+            }
+        }
+    }
+
+    stages{
+        stage('Deploy'){
+            step{
+                echo ""
+            }
+        }
+    }
+}
