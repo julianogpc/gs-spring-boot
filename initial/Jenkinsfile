@@ -41,13 +41,35 @@ pipeline{
 
         stage('Deploy'){
             steps{
-                withCredentials([kubeconfigFile(credentialsId: 'K8S_RANCHER', variable: 'KUBECONFIG_FILE')]) {
-                    withEnv(["KUBECONFIG=${KUBECONFIG_FILE}"]) {
-                        withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: '', namespace: '', serverUrl: '') {
-                            sh "kubectl -n gs-spring-boot set image deployment/gs-spring-boot gs-spring-boot=julianogpc/gs-spring-boot:${env.BUILD_ID} --record"
-                        }
+//                 withCredentials([kubeconfigFile(credentialsId: 'K8S_RANCHER', variable: 'KUBECONFIG_FILE')]) {
+//                     withEnv(["KUBECONFIG=${KUBECONFIG_FILE}"]) {
+//                         withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: '', namespace: '', serverUrl: '') {
+//                             sh "kubectl -n gs-spring-boot set image deployment/gs-spring-boot gs-spring-boot=julianogpc/gs-spring-boot:${env.BUILD_ID} --record"
+//                         }
+//                     }
+//                 }
+                    withKubeConfig(caCertificate: '''LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUM3akNDQ\\
+                    WRhZ0F3SUJBZ0lCQURBTkJna3Foa2lHOXcwQkFRc0ZBREFvTVJJd0VBWURWUVFLRXdsMGFHVXQKY\\
+                    21GdVkyZ3hFakFRQmdOVkJBTVRDV05oZEhSc1pTMWpZVEFlRncweU1EQXpNVEV5TXpVMk5EbGFGd\\
+                    zB6TURBegpNRGt5TXpVMk5EbGFNQ2d4RWpBUUJnTlZCQW9UQ1hSb1pTMXlZVzVqYURFU01CQUdBM\\
+                    VVFQXhNSlkyRjBkR3hsCkxXTmhNSUlCSWpBTkJna3Foa2lHOXcwQkFRRUZBQU9DQVE4QU1JSUJDZ\\
+                    0tDQVFFQXRVY2RTZHdUMjZyalA3SngKcExwalFvQnRoSjBEMGRVZ3RES3FNaFRvRERCMFdTM2JTZ\\
+                    2JXeUJjSlJRUDArSXRyWGJsOVNLOTRzYzlNVmtsdApwM3BHRnZMZXc4Mmw3Q1VyckN6OEhVVVlpc\\
+                    zh5K3lFNng0bkN3K1RiSUJ2eGUrcDVvSXhtcStOUS9iblhnajFaCjJTY3JhUGpORDBVdGNmY0UvS\\
+                    lRaK0ZyRnk3a1EwUURZTmNueHovMzFhekhRR0J2MTN4NWtleFdIckdyK2t5SW4KQnh4N25sVnNmM\\
+                    St3WVhGU09DUEpaU1FxVjRWeGwxalFkbzZKYnlhUzBaZlppWmVIY3Y1dUdra0kvM3BsejVWeQpaZ\\
+                    nREbC9lY0FSMFRKOHR5bVhjdDJWcEdKa29mdEhac25OQWhoOEpJZFVUbnpSZmJDMnkvN2l4ZDlIQ\\
+                    UtnR3d4CmF3TWF1d0lEQVFBQm95TXdJVEFPQmdOVkhROEJBZjhFQkFNQ0FxUXdEd1lEVlIwVEFRS\\
+                    C9CQVV3QXdFQi96QU4KQmdrcWhraUc5dzBCQVFzRkFBT0NBUUVBQ1RNeHUxcXFjN3RYSGF2d1oyT\\
+                    2VqWmdXT2w0QXV0Ty84VFdna3ZCKwpNTFVGeU5oa01IOVlWbXZOQnA1aVZWMmhXRFk4NjExQTEwQ\\
+                    VlILzRuOGtMclpuYy9NdFpZNTVLQ3RNRFJQQkpPCjNZSkM5Lzdjc3AyMU5DRmtPOTVwZ21DSThZN\\
+                    05NeUl3SnpBZkNpekdWMTNBOVNzOUl5dkJNNXhsMjV4RHhTY2cKcTU5cW5GVm5HRDh0eXlBc2hIa\\
+                    0xDYmlvbE8yVERkazJCeGNRYWw0SUZnbFZrdUc1VDROdy95V1dRakJibkhDYgpYOXJZa0E0Y2hJM\\
+                    UNtdzJXanh5UkxSQ0lWNGFrTVUvUnQ0M2xKZmF6VStwSnMvdFNFdTVFekNYdWJxeklmdEVCCjdUY\\
+                    U1NNXBkNEJySEJWYWRReCt1M1luNEhZczF6dnFjUGVySnMwNytDcU5CVnc9PQotLS0tLUVORCBDR\\
+                    VJUSUZJQ0FURS0tLS0t''', clusterName: 'local', contextName: 'local', credentialsId: 'RANCHER_JENKINS_TOKEN', namespace: 'gs-spring-boot', serverUrl: 'https://rancher.julianograciano.eti.br/k8s/clusters/local') {
+                        sh "kubectl -n gs-spring-boot set image deployment/gs-spring-boot gs-spring-boot=julianogpc/gs-spring-boot:${env.BUILD_ID} --record"
                     }
-                }
             }
         }
     }
