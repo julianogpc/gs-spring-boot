@@ -29,7 +29,7 @@ pipeline{
                 dir("${BUILD_DIR}"){
                     withDockerServer([credentialsId: 'DOCKER_CERT', uri: "${DOCKER_HOST}"]) {
                         script{
-                            def image = docker.build("julianogpc/gs-spring-boot/gs-spring-boot:${env.BUILD_ID}", ".")
+                            def image = docker.build("julianogpc/gs-spring-boot:${env.BUILD_ID}", ".")
                             withDockerRegistry(credentialsId: 'DOCKER_HUB', url: 'https://registry.hub.docker.com/julianogpc/gs-spring-boot') {
                                 image.push()
                             }
@@ -43,7 +43,7 @@ pipeline{
             steps{
                 withCredentials([kubeconfigFile(credentialsId: 'K8S_RANCHER', variable: 'KUBECONFIG_FILE')]) {
                     withEnv(["KUBECONFIG=${KUBECONFIG_FILE}"]) {
-                        sh "kubectl -n gs-spring-boot set image deployment/gs-spring-boot gs-spring-boot=julianogpc/gs-spring-boot/gs-spring-boot:${env.BUILD_ID} --record"
+                        sh "kubectl -n gs-spring-boot set image deployment/gs-spring-boot gs-spring-boot=julianogpc/gs-spring-boot:${env.BUILD_ID} --record"
                     }
                 }
             }
