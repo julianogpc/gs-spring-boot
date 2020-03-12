@@ -3,22 +3,34 @@ pipeline{
         label 'master'
     }
 
+    environment{
+        BUILD_DIR="${WORKSPACE}/initial"
+    }
+
     stages{
         stage('Checkout'){
             steps{
-                echo ""
+                checkout([$class: 'GitSCM', branches: [[name: '*/develop']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'GITHUB_USER', url: 'https://github.com/julianogpc/gs-spring-boot.git']]])
             }
         }
 
         stage('Build'){
             steps{
-                echo ""
+                dir("${BUILD_DIR}"){
+                    sh '''
+                        ./gradlew bootJar
+                    '''
+                }
             }
         }
 
         stage('Publish'){
             steps{
-                echo ""
+                dir("${BUILD_DIR}"){
+                    sh '''
+                        echo ""
+                    '''
+                }
             }
         }
 
