@@ -43,7 +43,9 @@ pipeline{
             steps{
                 withCredentials([kubeconfigFile(credentialsId: 'K8S_RANCHER', variable: 'KUBECONFIG_FILE')]) {
                     withEnv(["KUBECONFIG=${KUBECONFIG_FILE}"]) {
-                        sh "kubectl -n gs-spring-boot set image deployment/gs-spring-boot gs-spring-boot=julianogpc/gs-spring-boot:${env.BUILD_ID} --record"
+                        withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: '', namespace: '', serverUrl: '') {
+                            sh "kubectl -n gs-spring-boot set image deployment/gs-spring-boot gs-spring-boot=julianogpc/gs-spring-boot:${env.BUILD_ID} --record"
+                        }
                     }
                 }
             }
