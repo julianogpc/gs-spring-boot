@@ -68,7 +68,11 @@ pipeline{
                     UNtdzJXanh5UkxSQ0lWNGFrTVUvUnQ0M2xKZmF6VStwSnMvdFNFdTVFekNYdWJxeklmdEVCCjdUY\\
                     U1NNXBkNEJySEJWYWRReCt1M1luNEhZczF6dnFjUGVySnMwNytDcU5CVnc9PQotLS0tLUVORCBDR\\
                     VJUSUZJQ0FURS0tLS0t''', clusterName: 'local', contextName: 'local', credentialsId: 'RANCHER_JENKINS_TOKEN', namespace: 'gs-spring-boot', serverUrl: 'https://rancher.julianograciano.eti.br/k8s/clusters/local') {
-                        sh "kubectl -n gs-spring-boot set image deployment/gs-spring-boot gs-spring-boot=julianogpc/gs-spring-boot:${env.BUILD_ID} --record"
+                        sh """
+                            curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.17.3/bin/linux/amd64/kubectl
+                            chmod +x kubectl
+                            ./kubectl -n gs-spring-boot set image deployment/gs-spring-boot gs-spring-boot=julianogpc/gs-spring-boot:${env.BUILD_ID} --record
+                        """
                     }
             }
         }
