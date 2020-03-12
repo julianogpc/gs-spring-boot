@@ -41,7 +41,11 @@ pipeline{
 
         stage('Deploy'){
             steps{
-                echo ""
+                withCredentials([kubeconfigFile(credentialsId: 'K8S_RANCHER', variable: 'KUBECONFIG_FILE')]) {
+                    withEnv(["KUBECONFIG=${KUBECONFIG_FILE}"]) {
+                        sh 'kubectl -n gs-spring-boot set image deployment/gs-spring-boot gs-spring-boot=docker.pkg.github.com/julianogpc/gs-spring-boot/gs-spring-boot:${env.BUILD_ID} --record'
+                    }
+                }
             }
         }
     }
