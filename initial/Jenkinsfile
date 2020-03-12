@@ -30,7 +30,7 @@ pipeline{
                     withDockerServer([credentialsId: 'DOCKER_CERT', uri: "${DOCKER_HOST}"]) {
                         script{
                             def image = docker.build("docker.pkg.github.com/julianogpc/gs-spring-boot/gs-spring-boot:${env.BUILD_ID}", ".")
-                            withDockerRegistry(credentialsId: 'GITHUB_USER', url: 'docker.pkg.github.com/julianogpc/gs-spring-boot') {
+                            withDockerRegistry(credentialsId: 'GITHUB_USER', url: 'https://docker.pkg.github.com/julianogpc/gs-spring-boot') {
                                 image.push()
                             }
                         }
