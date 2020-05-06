@@ -30,3 +30,11 @@ steps:
     PathtoPublish: '$(System.DefaultWorkingDirectory)/initial/target/spring-boot-0.0.1-SNAPSHOT.jar'
     ArtifactName: 'drop'
     publishLocation: 'Container'
+
+- task: Docker@2
+  inputs:
+    containerRegistry: 'Docker Hub - julianogpc'
+    repository: 'gs-spring-boot'
+    command: 'build'
+    Dockerfile: '**/initial/Dockerfile'
+    arguments: 'JAR_FILE=target/spring-boot-0.0.1-SNAPSHOT.jar'
