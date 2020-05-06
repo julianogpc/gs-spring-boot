@@ -54,6 +54,5 @@ steps:
     kind: 'deployment'
     name: 'gs-spring-boot'
     mergeStrategy: 'strategic'
-    patch: |
-      '{"spec": {"template": {"spec":{"containers":[{"name":"gs-spring-boot","image":"julianogpc/gs-spring-boot:$(Build.BuildId)"}]}}}}'
+    patch: '{"spec": {"template": {"spec":{"containers":[{"name":"gs-spring-boot","image":"julianogpc/gs-spring-boot:$(Build.BuildId)"}]}}}}'
 
