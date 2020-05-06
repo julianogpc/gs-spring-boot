@@ -38,3 +38,21 @@ steps:
     command: 'build'
     Dockerfile: '**/initial/Dockerfile'
     arguments: '--build-arg JAR_FILE=target/spring-boot-0.0.1-SNAPSHOT.jar'
+
+- task: Docker@2
+  inputs:
+    containerRegistry: 'Docker Hub - julianogpc'
+    repository: 'julianogpc/gs-spring-boot'
+    command: 'push'
+
+- task: KubernetesManifest@0
+  inputs:
+    action: 'patch'
+    kubernetesServiceConnection: 'default-default-1588734744071'
+    namespace: 'default'
+    resourceToPatch: 'name'
+    kind: 'deployment'
+    name: 'gs-spring-boot'
+    mergeStrategy: 'strategic'
+    patch: '''{"spec": {"template": {"spec":{"containers":[{"name":"gs-spring-boot","image":"julianogpc/gs-spring-boot:17"}]}}}}'''
+
